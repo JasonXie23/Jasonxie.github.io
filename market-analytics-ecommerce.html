@@ -1,0 +1,405 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Market Analytics on Ecommerce Platform</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+
+			<header id="header">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#menu">Menu</a></li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+
+			<nav id="menu">
+				<h2>Menu</h2>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+				<div class="inner">
+					<h1>Market Analytics on Ecommerce Platform</h1>
+
+					<h2>Problem</h2>
+					<p>An online retail bussiness company is facing reduced customer engagement and conversion rates despite launching several new online marketing campaigns.</p>
+					<p><strong>Key Points:</strong></p>
+					<ul>
+						<li><strong>Reduced Customer Engagement:</strong> The number of customer interactions and engagement with the site and marketing content has declined.</li>
+						<li><strong>Decreased Conversion Rates:</strong> Fewer site visitors are converting into paying customers.</li>
+						<li><strong>High Marketing Expenses:</strong> Significant investments in marketing campaigns are not yielding expected returns.</li>
+						<li><strong>Need for Customer Feedback Analysis:</strong> Understanding customer opinions about products and services is crucial for improving engagement and conversions.</li>
+					</ul>
+
+					<h2>Goal</h2>
+					<p>The project aims to connect campaign performance, engagement behavior, and customer feedback to improve commercial outcomes.</p>
+					<ul>
+						<li>Increase conversion rates by identifying weak funnel periods and improving campaign targeting.</li>
+						<li>Enhance customer engagement by finding which content types create stronger interaction.</li>
+						<li>Improve customer feedback scores by turning mixed or negative experiences into positive outcomes.</li>
+					</ul>
+
+					<h2>Data Source</h2>
+					<p>The project dataset is stored in <strong>SQL Server</strong>, and a full backup file is available for restore.</p>
+					<ul>
+						<li><strong>Backup file (.bak):</strong> <a href="Project%20Content/Market-Analytics-on-E-commerce-Platform/MarketingAnalytics.bak">MarketingAnalytics.bak</a></li>
+					</ul>
+					<h3>Tables</h3>
+					<ul>
+						<li><strong>customers:</strong> Stores master customer profile data and links each customer to a location.</li>
+						<li><strong>geography:</strong> Location dimension table used for geographic slicing and reporting.</li>
+						<li><strong>products:</strong> Product dimension table used to evaluate product-level conversion and pricing performance.</li>
+						<li><strong>engagement_data:</strong> Records campaign/content interactions and engagement signals across channels.</li>
+						<li><strong>customer_journey:</strong> Captures customer funnel progression and behavioral steps before conversion.</li>
+						<li><strong>customer_reviews:</strong> Stores raw customer feedback for satisfaction and sentiment analysis.</li>
+					</ul>
+
+					<h2>Data Cleaning</h2>
+					<p>The data cleaning process focused on making the dataset consistent, analysis-ready, and reliable for dashboard reporting.</p>
+					<ul>
+						<li>
+							<strong>Integrated customer and location data:</strong> Merged customer profiles with country/city information so performance can be analyzed by region while keeping full customer coverage.
+							<div style="margin-top: 0.75em; margin-bottom: 0.25em; min-height: 140px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Query1.png" alt="SQL query 1 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+						</li>
+						<li>
+							<strong>Created clearer product groupings:</strong> Converted raw product prices into simple pricing tiers (Low, Medium, High) to make comparisons and storytelling easier.
+							<div style="margin-top: 0.75em; margin-bottom: 0.25em; min-height: 140px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Query2.png" alt="SQL query 2 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+						</li>
+						<li>
+							<strong>Standardized review text quality:</strong> Cleaned formatting issues in review text (such as extra spaces) to improve downstream sentiment and text analysis quality.
+							<div style="margin-top: 0.75em; margin-bottom: 0.25em; min-height: 140px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Query3.png" alt="SQL query 3 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+						</li>
+						<li>
+							<strong>Normalized engagement fields:</strong> Unified inconsistent content labels, separated combined engagement values into distinct metrics, standardized date format, and filtered out non-relevant records.
+							<div style="margin-top: 0.75em; margin-bottom: 0.25em; min-height: 140px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Query4.png" alt="SQL query 4 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+						</li>
+						<li>
+							<strong>Resolved journey data quality issues:</strong> Removed duplicate journey events and filled missing duration values with reasonable reference values to reduce funnel analysis distortion.
+							<div style="margin-top: 0.75em; margin-bottom: 0.25em; min-height: 140px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Query5.png" alt="SQL query 5 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+						</li>
+					</ul>
+
+					<h2>Sentiment Analysis</h2>
+					<p>The review sentiment score is grouped into four buckets so stakeholders can quickly interpret intensity levels.</p>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Sentiment Bucket</th>
+									<th>Score Rule</th>
+									<th>Interpretation</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>0.5 to 1.0</td>
+									<td>score &gt;= 0.5</td>
+									<td>Strongly positive sentiment</td>
+								</tr>
+								<tr>
+									<td>0.0 to 0.49</td>
+									<td>0.0 &lt;= score &lt; 0.5</td>
+									<td>Mildly positive sentiment</td>
+								</tr>
+								<tr>
+									<td>-0.49 to 0.0</td>
+									<td>-0.5 &lt;= score &lt; 0.0</td>
+									<td>Mildly negative sentiment</td>
+								</tr>
+								<tr>
+									<td>-1.0 to -0.5</td>
+									<td>score &lt; -0.5</td>
+									<td>Strongly negative sentiment</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p>The final sentiment label combines text sentiment direction with star rating to better reflect business context.</p>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Sentiment Category</th>
+									<th>Rule Summary</th>
+									<th>Business Meaning</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Positive</td>
+									<td>Positive or neutral text with high rating (4-5)</td>
+									<td>Clearly satisfied customer experience</td>
+								</tr>
+								<tr>
+									<td>Negative</td>
+									<td>Negative or neutral text with low rating (1-2)</td>
+									<td>Clear dissatisfaction requiring attention</td>
+								</tr>
+								<tr>
+									<td>Neutral</td>
+									<td>Neutral text with mid rating (3)</td>
+									<td>No strong positive or negative signal</td>
+								</tr>
+								<tr>
+									<td>Mixed Positive</td>
+									<td>High rating with negative text, or low rating with positive text (positive-leaning conflict)</td>
+									<td>Customer outcome is acceptable, but comments show specific concerns</td>
+								</tr>
+								<tr>
+									<td>Mixed Negative</td>
+									<td>Low rating with positive text, or mid rating with negative text (negative-leaning conflict)</td>
+									<td>Potential friction points that may hurt retention if unresolved</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p><strong>Code Reference:</strong> <a href="Project%20Content/Market-Analytics-on-E-commerce-Platform/customer_reviews_enrichment.py">customer_reviews_enrichment.py</a></p>
+
+					<h2>Power BI Dashboard</h2>
+					<p>This section embeds the Power BI dashboard for interactive exploration.</p>
+					<div style="position: relative; padding-top: 56.25%; margin-bottom: 2em;">
+						<iframe
+							title="market dashboard"
+							src="https://app.powerbi.com/view?r=eyJrIjoiOTQxYTA5NWYtM2I5Yi00NDIxLTk3ZDYtZmEwY2M3OTFkZjk4IiwidCI6ImQwMTExZDU2LWMwNTktNDc2Ni1iOWFhLWE4ZGIxYzE5M2M2ZSJ9&pageName=0b3078ade1f76309a805"
+							style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+							allowfullscreen="true">
+						</iframe>
+					</div>
+
+					<h2>Dashboard Insights</h2>
+					<div style="display: flex; flex-direction: column; gap: 1.5em; margin-bottom: 2em;">
+						<h3 style="margin: 0;">Overview Page</h3>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight1.png" alt="Insight 1 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Decreased Conversion Rates:</h3>
+								<ul>
+									<li>Conversion rates	
+remained relatively stable in the first half of the year at 
+around 10%, followed by a noticeable decline in July and 
+August. September shows a sharp, short-term spike, likely 
+driven by a specific campaign or promotional activity, as the 
+rate quickly returned to baseline in October. A further
+investigation should be implemented in July and October.
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight2.png" alt="Insight 2 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Reduced Customer Engagement:</h3>
+								<ul>
+									<li>There is a decline in overall social media engagement, with views dropping throughout the year.</li>
+									<li>While clicks and likes are low compared to views, the click-through rate stands at 6.17%, meaning that engaged users are still interacting effectively based on E-commerce knowledge.</li>
+								</ul>
+							</div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight3.png" alt="Insight 3 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Customer Feedback Analysis:</h3>
+								<ul>
+									<li>Customer ratings have remained consistent, averaging around 3.66 throughout the year.</li>
+									<li>Although stable, the average rating is below the target of 4.0, suggesting a need for focused improvements in customer satisfaction, for products below 3.5.</li>
+								</ul>
+							</div>
+						</div>
+						<h3 style="margin: 0;">Conversion Rate Page</h3>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight4.png" alt="Insight 4 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Decreased Conversion Rate</h3>
+								<ul>
+									<li>General Conversion Trend: Conversion performance fluctuated throughout the year, with 
+noticeable peaks in March and September, where a broader range 
+of products achieved relatively strong conversion rates. In contrast, July and October recorded weaker overall performance 
+(2.94% and 4.48% respectively). This decline appears to be 
+associated with narrower promotional coverage and lower 
+transaction volume. </li>
+									<li>High-Performing Product Categories: In peak months such as March and September, several products 
+consistently demonstrated stronger conversion performance, 
+including: Fitness Tracker, Dumbbells, Cycling Helmet and climbing 
+Robe. However, in July and October, these categories either 
+received limited campaign support or experienced reduced traffic 
+contribution, which may have constrained their overall impact on 
+monthly performance.</li>
+								</ul>
+							</div>
+						</div>
+						<h3 style="margin: 0;">Customer Engagement Page</h3>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight5.png" alt="Insight 5 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Declining Views and low interaction:</h3>
+								<ul>
+									<li> Views have a consistent decline until September, then remain stable. 
+Clicks and likes remained consistently low compared to views, 
+suggesting the need for more engaging content or stronger calls to 
+action</li>
+								</ul>
+							</div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight6.png" alt="Insight 6 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Content Type Performance:</h3>
+								<ul>
+									<li> Traffic across all content types peaked in Q1 and gradually declined 
+toward mid-year before partially Traffic across all content types peaked 
+in Q1 and gradually declined toward mid-year before partially 
+recovering in Q4. Blog content drives the highest volume but is also the 
+most volatile, while social media traffic appears relatively stable 
+throughout the year. The mid-year traffic decline likely contributed to 
+the overall drop in conversion performance during July and August.</li>
+								</ul>
+							</div>
+						</div>
+						<h3 style="margin: 0;">Feedback Page</h3>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight7.png" alt="Insight 7 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Declining Views and low interaction:</h3>
+								<ul>
+									<li>The majority of customer reviews are in the higher ratings, with 154 reviews at 4 
+stars and 138 reviews at 5 stars, indicating overall positive feedback. Lower 
+ratings (1-2 stars) account for a smaller proportion, with 27 reviews at 1 star 
+and 60 reviews at 2 stars.</li>
+								</ul>
+							</div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 190px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;">
+								<img src="images/Insight8.png" alt="Insight 8 screenshot" style="max-width: 100%; height: auto; display: block;" />
+							</div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Sentiment Analysis:</h3>
+								<ul>
+									<li>Positive sentiment dominates with 292 reviews, reflecting a generally satisfied 
+customer base. Negative sentiment is present in 12 reviews, with a smaller 
+number of mixed and neutral sentiments, suggesting some areas for 
+improvement but overall strong customer approval.</li>
+										<li>The presence of mixed positive and mixed negative sentiments suggests that 
+there are opportunities to convert those mixed experiences into more clearly 
+positive ones, potentially boosting overall ratings. Addressing the specific 
+concerns in mixed reviews could elevate customer satisfaction.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<h2>Recommendations</h2>
+					<div style="padding: 0.25em 0 0.5em 0;">
+						<ul style="margin-bottom: 0;">
+							<li style="margin-bottom: 1.1em;">
+								<strong>Increase Conversion Rates:</strong>
+								<ul style="margin-top: 0.6em;">
+									<li><u>Target High-Performing Product Categories:</u> Focus marketing efforts on products with demonstrated high conversion rates, such as Surfboard, Hockey Stick, Cycling Helmet and climbing rope. Implement seasonal promotions or personalized campaigns during peak months (e.g., March and September) to capitalize on these trends.</li>
+									<li>
+										In weak-performance months, two strategies can be considered:
+										<ol style="margin-top: 0.5em;">
+											<li><strong>Growth-Oriented Strategy:</strong> If the company aims to gain market share and strengthen competitive positioning, launching targeted campaigns for historically high-performing products may help stimulate demand and capture incremental growth during slower periods.</li>
+											<li><strong>Cost-Control Strategy:</strong> If the priority is profitability and risk management, reducing overall marketing spend during low-demand months may help control costs and protect margins, particularly when traffic volume and conversion stability are limited.</li>
+										</ol>
+									</li>
+								</ul>
+							</li>
+							<li style="margin-bottom: 1.1em;">
+								<strong>Enhance Customer Engagement:</strong>
+								<ul style="margin-top: 0.6em;">
+									<li><u>Revitalize Content Strategy:</u> To turn around declining views and low interaction rates, experiment with more engaging content formats, such as interactive videos or user-generated content. Additionally, boost engagement by optimizing call-to-action placement in social media and blog content, particularly during historically lower-engagement months (July to September).</li>
+								</ul>
+							</li>
+							<li>
+								<strong>Improve Customer Feedback Scores:</strong>
+								<ul style="margin-top: 0.6em;">
+									<li><u>Address Mixed and Negative Feedback:</u> Implement a feedback loop where mixed and negative reviews are analyzed to identify common issues. Develop improvement plans to address these concerns. Consider following up with dissatisfied customers to resolve issues and encourage re-rating, aiming to move average ratings closer to the 4.0 target.</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+
+					<h2>Drawbacks</h2>
+					<p>This analysis is primarily conversion-rate-driven. In practice, Average Order Value (AOV) should also be included to evaluate commercial impact more completely. However, because order value data was unavailable in the current dataset, the analysis scope was limited to conversion-focused insights.</p>
+				</div>
+			</div>
+
+			<footer id="footer">
+				<div class="inner">
+					<section>
+						<h2>Get in touch</h2>
+						<form method="post" action="#">
+							<div class="fields">
+								<div class="field half">
+									<input type="text" name="name" id="name" placeholder="Name" />
+								</div>
+								<div class="field half">
+									<input type="email" name="email" id="email" placeholder="Email" />
+								</div>
+								<div class="field">
+									<textarea name="message" id="message" placeholder="Message"></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send" class="primary" /></li>
+							</ul>
+						</form>
+					</section>
+					<section>
+						<h2>Follow</h2>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/jj1030/" class="icon brands style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						</ul>
+					</section>
+				</div>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
