@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Bank Churn Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+
+			<header id="header">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#menu">Menu</a></li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+
+			<nav id="menu">
+				<h2>Menu</h2>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+				<div class="inner">
+					<h1>Bank Churn Analysis</h1>
+
+					<h2>Background</h2>
+					<p>This project analyzes customer churn behavior in a retail banking dataset. The objective is to understand which customer groups are more likely to leave and identify practical business actions to improve retention.</p>
+
+					<h2>Data Source</h2>
+					<p>Source file: <a href="Churn_Modelling.csv">Churn_Modelling.csv</a>.</p>
+					<ul>
+						<li>Total number of records present in the dataset is 10000.</li>
+						<li>Total number of attributes is 13, including Customer_Id, Gender, Age, Surname, CreditScore, Geography, Tenure, NumOfProducts, HasCrCard, IsActiveMember, Balance, EstimatedSalary, Exited.</li>
+					</ul>
+					Here are some interpretations of the attributes:
+					<ul>
+						<li><code>CustomerId</code>: Unique identifier for each customer.</li>
+						<li><code>CreditScore</code>: It is a numerical value that assesses the creditworthiness of an individual based on their credit history and financial behavior.</li>
+						<li><code>Geography</code>: It indicates the country or region where the customer resides.</li>
+						<li><code>Tenure</code>: It represents the number of years a customer has been with the bank.</li>
+						<li><code>NumOfProducts</code>: It indicates the number of products or services that a customer has with the bank such as savings accounts, credit cards, loans, etc.</li>
+						<li><code>HasCrCard</code>: It indicates whether the customer has a credit card (1) or not (0).</li>
+						<li><code>IsActiveMember</code>: It indicates whether the customer is an active member (1) or not (0).</li>
+						<li><code>Balance</code>: It represents the account balance of the customer.</li>
+						<li><code>EstimatedSalary</code>: It provides an approximation of the customer's income level, which can be relevant for analyzing churn behavior.</li>
+						<li><code>Exited</code>: It indicates whether the customer has churned (1) or not (0).</li>
+					</ul>
+					<p><strong>Source Code Notebook:</strong> <a href="Bank_churn_notebook.ipynb">Bank_churn_notebook.ipynb</a></p>
+
+					<h2>Data Wrangling</h2>
+					<ul>
+						<li>Checked for missing values and found none, indicating a clean dataset.</li>
+						<li>Identified and removed duplicate records, ensuring data integrity.</li>
+						<li>Analyzed data types and converted categorical variables to appropriate formats for modeling.</li>
+						<li>Dropped non-informative identifiers and low-value fields: <code>RowNumber</code>, <code>CustomerId</code>, and <code>Surname</code>.</li>
+						<li>Renamed <code>Exited</code> to <code>Churned</code> for clearer business interpretation.</li>
+					</ul>
+
+					<h2>Explorative Data Analysis</h2>
+					<p>Visualize both categorical and numerical variables to understand their distributions and relationships with churn.</p>
+					<div style="display: flex; flex-direction: column; gap: 1.5em; margin-bottom: 2em;">
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v1.png" alt="EDA figure 1" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Imbalanced Churn ratio</h3><p>The dataset shows a significant imbalance in churned customers, with only 20% of customers churning and 80% remaining within bank. If further machine learning model needs to be trained on this dataset, techniques like SMOTE or class weighting should be applied to handle the imbalance.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v2.png" alt="EDA figure 2" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Germany needs attention</h3><p>Approximately 50% of customers are from France, making it the largest customer segment, followed by Spain, while Germany has the smallest share. In both France and Spain, the churn-to-retained ratio is roughly 1:5, indicating relatively stable customer retention. In contrast, Germany shows a much higher churn pattern, with a ratio close to 1:2, suggesting that customers in this market are significantly more likely to leave. This gap highlights Germany as a priority region for targeted retention strategies.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v3.png" alt="EDA figure 3" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Prioritize Female Customers</h3><p>Male customers make up a larger share of the base (about 8% more than female customers), but female customers churn at a higher rate. So even with a smaller segment, female churn risk is relatively higher. This suggests we should prioritize retention actions for female customers.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v4.png" alt="EDA figure 4" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Tenure Analysis</h3><p>Across tenure 1-9 years, churn patterns are fairly stable with no major differences, so tenure alone is not a strong separator in this range. The clear exceptions are tenure 0 and 10, where customer counts are much lower and behavior differs from the middle groups. Because these edge groups are smaller, we should interpret them cautiously and combine tenure with other features for decisions.
+
+
+</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v5.png" alt="EDA figure 5" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Product Depth Analysis</h3><p>Most customers hold 1 or 2 products, with 2-product customers making up the largest stable group. Churn among customers with 2 products is relatively low compared with their non-churned base, while 1-product customers show a noticeably higher churn share. Very few customers have more than 2 products, so those segments are small but still worth monitoring for risk signals. Overall, product depth appears related to retention: moving customers from 1 to 2 relevant products may help reduce churn.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v6.png" alt="EDA figure 6" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Credit Card Analysis</h3><p>Customers with and without a credit card show a very similar churn-to-retained ratio (around 1:4 in both groups). This suggests credit card ownership, by itself, is not a strong driver of churn in this dataset.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v7.png" alt="EDA figure 7" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Activity Level Analysis</h3><p>Active members churn less than inactive members. Inactive customers have a higher churn share, so activity level is a strong churn signal. Retention efforts should focus on re-activating low-activity customers.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v8.png" alt="EDA figure 8" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">CreditScore Analysis</h3><p>CreditScore distributions for churned and non-churned customers are very similar, with close medians and overlapping ranges. This suggests CreditScore alone has limited power to separate churn risk.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v9.png" alt="EDA figure 9" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Age Analysis</h3><p>Age shows a clear churn signal. Churned customers are generally older, and churn increases notably in higher age groups (especially 50+). The age distribution is right-skewed, so applying a log transform is reasonable to stabilize the feature for modeling.</p></div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v10.png" alt="EDA figure 10" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;">
+								<h3 style="margin-top: 0;">Balance Analysis</h3>
+								<p>The balance distribution shows a clear bimodal pattern:</p>
+								<ul>
+									<li>A large customer group has balances near zero--Low or inactive balance customers..</li>
+									<li>Another major concentration appears around the 100k-130k range--Customers maintaining meaningful deposit balances.</li>
+								</ul>
+								<p>When comparing churned vs retained customers, churn is more concentrated in the mid-to-high balance range. The key risk is that the bank is losing customers with meaningful deposits, which can negatively impact interest margins, liquidity strength, and multi-product relationship depth.</p>
+							</div>
+						</div>
+						<div style="display: flex; flex-wrap: wrap; gap: 1.5em; align-items: stretch;">
+							<div style="flex: 1 1 320px; min-height: 220px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1em;"><img src="images/bank_v11.png" alt="EDA figure 11" style="max-width: 100%; height: auto; display: block;" /></div>
+							<div style="flex: 1 1 320px;"><h3 style="margin-top: 0;">Estimated Salary Analysis</h3><p>EstimatedSalary shows very similar distributions for churned and non-churned customers. The medians, spread, and overall shape are closely aligned, with no clear separation between the two groups. This suggests salary alone is not a strong churn driver in this dataset and should be interpreted together with behavioral features such as activity status, product count, and age.
+
+
+</p></div>
+						</div>
+					</div>
+
+					<h2>Feature Engineering</h2>
+					<ul>
+						<li><strong>Redesigned NumOfProducts:</strong> Since customers with more than two products are a very small group, <code>NumOfProducts</code> was transformed into <code>Total_Products</code> with three categories: <code>One product</code>, <code>Two Products</code>, and <code>More Than 2 Products</code>.</li>
+						<li><strong>One-hot encoding:</strong> Applied one-hot encoding to categorical variables so they can be used by the model.</li>
+						<li><strong>Log transformation:</strong> Applied log transformation to continuous features with high skewness to make their distribution more stable for modeling.</li>
+					</ul>
+
+					<h2>Random Forest Model Training</h2>
+					<ul>
+						<li>Split data into training and testing sets after preprocessing.</li>
+						<li>Trained a Random Forest classifier as the primary churn prediction model.</li>
+						<li>Applied Grid Search cross-validation to tune key hyperparameters (such as tree depth, number of trees, and split settings) and select the best-performing model configuration.</li>
+						<li>Evaluated model quality using accuracy, confusion matrix, and ROC-AUC.</li>
+						<li>The notebook reports around <strong>84.25%</strong> test accuracy.</li>
+					</ul>
+					<div style="display: flex; flex-wrap: wrap; gap: 1.5em; margin-bottom: 2em; align-items: stretch;">
+						<div style="flex: 1 1 420px;">
+							<h3 style="margin-top: 0;">Confusion Matrix</h3>
+							<div style="border: 2px dashed #ccc; padding: 0.75em; height: 320px; display: flex; align-items: center; justify-content: center;">
+								<img src="images/confusion_matrix.png" alt="Random Forest confusion matrix" style="max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; display: block;" />
+							</div>
+						</div>
+						<div style="flex: 1 1 420px;">
+							<h3 style="margin-top: 0;">ROC Curve</h3>
+							<div style="border: 2px dashed #ccc; padding: 0.75em; height: 320px; display: flex; align-items: center; justify-content: center;">
+								<img src="images/roc.png" alt="Random Forest ROC curve" style="max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; display: block;" />
+							</div>
+						</div>
+					</div>
+
+					<h2>Random Forest Feature Importance</h2>
+					<div style="border: 2px dashed #ccc; padding: 0.75em; margin-bottom: 2em;">
+						<img src="images/feature_importance.png" alt="Random Forest feature importance" style="max-width: 100%; height: auto; display: block;" />
+					</div>
+					<p>We can see that Age, product-related variables, IsActiveMember, Geography (Germany), and Gender (Female) are the most important features in predicting churn from random forest model, which actually match the business insights from exploratory data analysis.</p>
+
+					<h2>Insights and Recommend</h2>
+					<div class="table-wrapper">
+						<table>
+							<thead>
+								<tr>
+									<th>Factor and Analysis</th>
+									<th>Recommendation</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Churn varies significantly by geography, with Germany showing a much higher churn ratio than France and Spain.</td>
+									<td>
+										<ul style="margin: 0;">
+											<li>Diagnose Germany-specific churn drivers (local competition, service experience gaps, product-market misalignment).</li>
+											<li>Compare key regional metrics (complaints, product mix, activation, churn by segment) against France and Spain to find root causes.</li>
+											<li>Launch Germany-focused retention offers and improve products/services for local customer needs.</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Female customers show higher churn tendency relative to their segment size. From my understanding, female customers like shopping and engage in different banks' credit card consuming events. Therefore a high churn rate in female may indicate the female customers are changing using other's bank financial products.</td>
+									<td>
+										<ul style="margin: 0;">
+											<li>Conduct qualitative research (surveys, interviews) to understand specific pain points and preferences of female customers.</li>
+											<li>Do cohort analysis find out common patterns in churn behavior among female customers.</li>
+											<li>Design retention offers tailored to female customer preferences and usage patterns, such as some coupons or exclusive deals for some clothes, jewelry, or fashion items.</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Customers with two products are less likely to churn than other product-count groups. This suggests that cross-product engagement increases stickness and single product customers may lack relationship depth.</td>
+									<td>
+										<ul style="margin: 0;">
+											<li>Identify the most stable two-product combinations from current customer behavior.</li>
+											<li>Bundle Optimization: Design simple two-product bundles with pricing that encourages cross-selling, but avoid over-bundling that may reduce customer satisfaction.</li>
+											<li>Monitor conversion-to-second-product and post-conversion churn as core KPIs to observe performance and optimize bundle design.</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Active members churn less than inactive members.</td>
+									<td>
+										<ul style="margin: 0;">
+											<li>Define low-activity trigger rules and flag customers early.</li>
+											<li>Run activation campaigns (like gamify activity rewards to get cashback tiers).</li>
+											<li>Measure activation lift and churn reduction after intervention.</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Age is one of the strongest predictors in both EDA and model outputs. Age can influence churn through lifecycle transitions, financial maturity, and changing needs over time.</td>
+									<td>
+										<ul style="margin: 0;">
+											<li>Age-segmented retention journeys, for instance, young customers like digital-first engagement, and mid-career customers prefer investments and wealth-building products. Senior customers may value stability.</li>
+											<li>Detect milestone events (e.g., mortgage, retirement, job change), and then align products with life-stage needs.</li>
+										</ul>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+
+			<footer id="footer">
+				<div class="inner">
+					<section>
+						<h2>Get in touch</h2>
+						<form method="post" action="#">
+							<div class="fields">
+								<div class="field half">
+									<input type="text" name="name" id="name" placeholder="Name" />
+								</div>
+								<div class="field half">
+									<input type="email" name="email" id="email" placeholder="Email" />
+								</div>
+								<div class="field">
+									<textarea name="message" id="message" placeholder="Message"></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><input type="submit" value="Send" class="primary" /></li>
+							</ul>
+						</form>
+					</section>
+					<section>
+						<h2>Follow</h2>
+						<ul class="icons">
+							<li><a href="https://www.linkedin.com/in/jj1030/" class="icon brands style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						</ul>
+					</section>
+				</div>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
